@@ -394,6 +394,7 @@ public class VideoCamera extends NoSearchActivity
     private void finalizeHeadUpDisplay() {
         mHeadUpDisplay.collapse();
         ((ViewGroup) mGLRootView.getParent()).removeView(mGLRootView);
+        mHeadUpDisplay = null;
         mGLRootView = null;
     }
 
@@ -1227,7 +1228,8 @@ public class VideoCamera extends NoSearchActivity
                 } catch (RuntimeException e) {
                     Log.e(TAG, "stop fail: " + e.getMessage());
                 }
-                mHeadUpDisplay.setEnabled(true);
+                if (mHeadUpDisplay != null)
+                    mHeadUpDisplay.setEnabled(true);
                 mCurrentVideoFilename = mCameraVideoFilename;
                 Log.v(TAG, "Setting current video filename: "
                         + mCurrentVideoFilename);
