@@ -1635,6 +1635,8 @@ public class Camera extends NoSearchActivity implements View.OnClickListener,
 
     private void restartPreview() {
         try {
+            stopPreview();
+            closeCamera();
             startPreview();
         } catch (CameraHardwareException e) {
             showCameraErrorAndFinish();
