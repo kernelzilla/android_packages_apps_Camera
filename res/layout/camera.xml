@@ -19,24 +19,24 @@
         android:background="@drawable/camera_background"
         android:id="@+id/camera"
         android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
     <com.android.camera.PreviewFrameLayout android:id="@+id/frame_layout"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_width="fill_parent"
+            android:layout_height="300dp"
             android:layout_marginLeft="2dp"
             android:layout_weight="1">
         <FrameLayout android:id="@+id/frame"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
                 android:background="@drawable/border_view_finder">
             <SurfaceView android:id="@+id/camera_preview"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"/>
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"/>
             <com.android.camera.FocusRectangle
                     android:id="@+id/focus_rectangle"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"/>
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"/>
         </FrameLayout>
     </com.android.camera.PreviewFrameLayout>
 </LinearLayout>
