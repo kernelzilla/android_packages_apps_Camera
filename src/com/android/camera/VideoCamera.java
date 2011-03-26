@@ -900,8 +900,15 @@ public class VideoCamera extends NoSearchActivity
         mMediaRecorder.setCamera(mCameraDevice);
         mMediaRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
         mMediaRecorder.setVideoSource(MediaRecorder.VideoSource.CAMERA);
-        mMediaRecorder.setProfile(mProfile);
+        if(mProfile != null){
+           try {
+            mMediaRecorder.setProfile(mProfile);
+            } catch (RuntimeException exception) {
+              releaseMediaRecorder();
+              return;
+            }
         mMediaRecorder.setMaxDuration(mMaxVideoDurationInMs);
+        }
 
         // Set output file.
         if (mStorageStatus != STORAGE_STATUS_OK) {
