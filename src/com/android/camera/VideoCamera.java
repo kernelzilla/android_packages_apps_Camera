@@ -672,12 +672,14 @@ public class VideoCamera extends NoSearchActivity
         } else {
             stopVideoRecording();
         }
+
         closeCamera();
 
         if (mReceiver != null) {
             unregisterReceiver(mReceiver);
             mReceiver = null;
         }
+
         resetScreenOn();
 
         if (!mIsVideoCaptureIntent) {

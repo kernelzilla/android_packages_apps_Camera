@@ -1030,7 +1030,7 @@ public class Camera extends NoSearchActivity implements View.OnClickListener,
         mHeadUpDisplay.setListener(new MyHeadUpDisplayListener());
         mHeadUpDisplay.setOrientation(mLastOrientation);
 
-        if (mParameters.isZoomSupported()) {
+        /* if (mParameters.isZoomSupported()) {
             mHeadUpDisplay.setZoomRatios(getZoomRatios());
             mHeadUpDisplay.setZoomIndex(mZoomValue);
             mHeadUpDisplay.setZoomListener(new ZoomController.ZoomListener() {
@@ -1043,7 +1043,7 @@ public class Camera extends NoSearchActivity implements View.OnClickListener,
                     });
                 }
             });
-        }
+        } */
 
         updateSceneModeInHud();
 
