@@ -55,6 +55,8 @@ import android.provider.MediaStore.Video;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
+import android.view.OrientationEventListener;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.SurfaceHolder;
@@ -130,6 +132,9 @@ public class VideoCamera extends NoSearchActivity
     private ImageView mVideoFrame;
     private GLRootView mGLRootView;
     private CamcorderHeadUpDisplay mHeadUpDisplay;
+
+    private OrientationEventListener mOrientationListener;
+    private int mLastOrientation = 0;  // No rotation (landscape) by default.
 
     private boolean mIsVideoCaptureIntent;
     private boolean mQuickCapture;
@@ -291,6 +296,30 @@ public class VideoCamera extends NoSearchActivity
         });
         startPreviewThread.start();
 
+        mOrientationListener = new OrientationEventListener(VideoCamera.this) {
+            @Override
+            public void onOrientationChanged(int orientation) {
+                // We keep the last known orientation. So if the user
+                // first orient the camera then point the camera to
+                if (orientation != ORIENTATION_UNKNOWN) {
+                    orientation += 90;
+                }
+                orientation = ImageManager.roundOrientation(orientation);
+                if (orientation != mLastOrientation) {
+                    mLastOrientation = orientation;
+                    setOrientationIndicator(mLastOrientation);
+                    if (mGLRootView != null) {
+                        mGLRootView.queueEvent(new Runnable() {
+                            public void run() {
+                                mHeadUpDisplay.setOrientation(mLastOrientation);
+                            }
+                        });
+                    }
+                }
+            }
+        };
+        mOrientationListener.enable();
+
         mContentResolver = getContentResolver();
 
         requestWindowFeature(Window.FEATURE_PROGRESS);
@@ -389,6 +418,7 @@ public class VideoCamera extends NoSearchActivity
         mHeadUpDisplay.initialize(this, group);
         mGLRootView.setContentPane(mHeadUpDisplay);
         mHeadUpDisplay.setListener(new MyHeadUpDisplayListener());
+        mHeadUpDisplay.setOrientation(mLastOrientation);
     }
 
     private void finalizeHeadUpDisplay() {
@@ -396,6 +426,15 @@ public class VideoCamera extends NoSearchActivity
         ((ViewGroup) mGLRootView.getParent()).removeView(mGLRootView);
         mHeadUpDisplay = null;
         mGLRootView = null;
+    }
+
+    private void setOrientationIndicator(int degree) {
+        ((RotateImageView) findViewById(
+                R.id.review_thumbnail)).setDegree(degree);
+        ((RotateImageView) findViewById(
+                R.id.camera_switch_icon)).setDegree(degree);
+        ((RotateImageView) findViewById(
+                R.id.video_switch_icon)).setDegree(degree);
     }
 
     @Override
@@ -675,6 +714,7 @@ public class VideoCamera extends NoSearchActivity
         }
 
         closeCamera();
+        mOrientationListener.disable();
 
         if (mReceiver != null) {
             unregisterReceiver(mReceiver);
