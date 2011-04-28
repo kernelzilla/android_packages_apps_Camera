@@ -22,6 +22,7 @@ import com.android.camera.ui.CamcorderHeadUpDisplay;
 import com.android.camera.ui.GLRootView;
 import com.android.camera.ui.GLView;
 import com.android.camera.ui.HeadUpDisplay;
+import com.android.camera.ui.RotateRecordingTime;
 
 import android.content.ActivityNotFoundException;
 import android.content.BroadcastReceiver;
@@ -171,6 +172,7 @@ public class VideoCamera extends NoSearchActivity
     private ContentResolver mContentResolver;
 
     private ShutterButton mShutterButton;
+    private RotateRecordingTime mRecordingTimeRect;
     private TextView mRecordingTimeView;
     private Switcher mSwitcher;
     private boolean mRecordingTimeCountsDown = false;
@@ -343,6 +345,7 @@ public class VideoCamera extends NoSearchActivity
         mIsVideoCaptureIntent = isVideoCaptureIntent();
         mQuickCapture = getIntent().getBooleanExtra(EXTRA_QUICK_CAPTURE, false);
         mRecordingTimeView = (TextView) findViewById(R.id.recording_time);
+        mRecordingTimeRect = (RotateRecordingTime) findViewById(R.id.recording_time_rect);
 
         ViewGroup rootView = (ViewGroup) findViewById(R.id.video_camera);
         LayoutInflater inflater = this.getLayoutInflater();
@@ -435,6 +438,7 @@ public class VideoCamera extends NoSearchActivity
                 R.id.camera_switch_icon)).setDegree(degree);
         ((RotateImageView) findViewById(
                 R.id.video_switch_icon)).setDegree(degree);
+        mRecordingTimeRect.setOrientation(degree);
     }
 
     @Override
@@ -1172,6 +1176,8 @@ public class VideoCamera extends NoSearchActivity
             mMediaRecorderRecording = true;
             mRecordingStartTime = SystemClock.uptimeMillis();
             updateRecordingIndicator(false);
+            // Rotate the recording time.
+            mRecordingTimeRect.setOrientation(mLastOrientation);
             mRecordingTimeView.setText("");
             mRecordingTimeView.setVisibility(View.VISIBLE);
             updateRecordingTime();
