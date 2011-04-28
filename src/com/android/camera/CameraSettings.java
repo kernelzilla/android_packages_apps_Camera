@@ -190,10 +190,12 @@ public class CameraSettings {
             filterUnsupportedOptions(group,
                     flashMode, mParameters.getSupportedFlashModes());
         }
+
         if (focusMode != null) {
             filterUnsupportedOptions(group,
                     focusMode, mParameters.getSupportedFocusModes());
         }
+
         if (videoFlashMode != null) {
             filterUnsupportedOptions(group,
                     videoFlashMode, mParameters.getSupportedFlashModes());
