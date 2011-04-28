@@ -712,7 +712,6 @@ public class VideoCamera extends NoSearchActivity
         } else {
             stopVideoRecording();
         }
-
         closeCamera();
         mOrientationListener.disable();
 
@@ -720,7 +719,6 @@ public class VideoCamera extends NoSearchActivity
             unregisterReceiver(mReceiver);
             mReceiver = null;
         }
-
         resetScreenOn();
 
         if (!mIsVideoCaptureIntent) {

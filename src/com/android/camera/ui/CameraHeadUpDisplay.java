@@ -70,8 +70,8 @@ public class CameraHeadUpDisplay extends HeadUpDisplay {
         addIndicator(context, group, CameraSettings.KEY_WHITE_BALANCE);
         addIndicator(context, group, CameraSettings.KEY_FLASH_MODE);
 
-        //mZoomIndicator = new ZoomIndicator(context);
-        //mIndicatorBar.addComponent(mZoomIndicator);
+        mZoomIndicator = new ZoomIndicator(context);
+        mIndicatorBar.addComponent(mZoomIndicator);
     }
 
     public void setZoomListener(ZoomController.ZoomListener listener) {
