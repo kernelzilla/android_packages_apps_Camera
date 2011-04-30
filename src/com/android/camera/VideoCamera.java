@@ -716,6 +716,13 @@ public class VideoCamera extends NoSearchActivity
         } else {
             stopVideoRecording();
         }
+        mCameraDevice.lock();
+        mParameters = mCameraDevice.getParameters();
+        mParameters.set("record-size", "");
+        mParameters.set("flash-mode", "off");
+        mCameraDevice.setParameters(mParameters);
+        mCameraDevice.unlock();
+
         closeCamera();
         mOrientationListener.disable();
 
