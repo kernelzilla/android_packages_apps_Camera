@@ -105,11 +105,7 @@ public class ZoomIndicator extends AbstractIndicator {
 
     @Override
     public void reloadPreferences() {
-        //reset to zero. zero is the default.
-        setZoomIndex(0);
-        if (mZoomListener != null) {
-            mZoomListener.onZoomChanged(0, 0, false);
-        }
+        // do nothing
     }
 
     public void setZoomRatios(float[] ratios) {
