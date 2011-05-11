@@ -722,7 +722,6 @@ public class VideoCamera extends NoSearchActivity
         mParameters.set("flash-mode", "off");
         mCameraDevice.setParameters(mParameters);
         mCameraDevice.unlock();
-
         closeCamera();
         mOrientationListener.disable();
 
@@ -730,6 +729,7 @@ public class VideoCamera extends NoSearchActivity
             unregisterReceiver(mReceiver);
             mReceiver = null;
         }
+
         resetScreenOn();
 
         if (!mIsVideoCaptureIntent) {
